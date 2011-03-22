@@ -8,6 +8,10 @@
 
 " - - - - - - - - - - - - - - - - - - - - - - - 
 
+if !exists('g:dnstools_prompt_replacement')
+    let g:dnstools_prompt_replacement = 1
+endif
+
 function Getserial(oldnum)
     let oldnum = a:oldnum
     if oldnum < 19700101
@@ -37,7 +41,11 @@ function UpdateDNSserial()
     let oldignorecase = &ignorecase
     set ignorecase
     " silent
-    %s/\(soa[[:space:]]\+[a-z0-9.-]\+[[:space:]]\+[a-z0-9.-]\+[[:space:]]*(\?[\n\t ]*\)\([0-9]\+\)/\=submatch(1) . Getserial( submatch(2) )/c
+    if g:dnstools_prompt_replacement
+        %s/\(soa[[:space:]]\+[a-z0-9.-]\+[[:space:]]\+[a-z0-9.-]\+[[:space:]]*(\?[\n\t ]*\)\([0-9]\+\)/\=submatch(1) . Getserial( submatch(2) )/c
+    else
+        %s/\(soa[[:space:]]\+[a-z0-9.-]\+[[:space:]]\+[a-z0-9.-]\+[[:space:]]*(\?[\n\t ]*\)\([0-9]\+\)/\=submatch(1) . Getserial( submatch(2) )/
+    endif
     " restore position 
     exe restore_position_excmd
     " disable hls
