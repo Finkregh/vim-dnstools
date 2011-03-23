@@ -148,7 +148,7 @@ function! Checkzone()
         let string = substitute(string,"\n","","")
         let string = substitute(string,'^\.\+',"","")
         let string = string . '.in-addr.arpa'
-    
+
         let check =  system(g:named_checkzone_cmd.' '.string.' '.filename_org)
         call s:Warn(g:named_checkzone_cmd.' '.string.' '.filename_org)
         if matchstr(check,"OK") == "OK"
@@ -168,7 +168,7 @@ function! Checkzone()
 
 endfunction
 
-" - - - - - - - - - - - - - - - - - - - - - - - 
+" - - - - - - - - - - - - - - - - - - - - - - -
 
 if !exists('g:named_relaod_cmd')
     let g:named_reload_cmd = 'rndc reload'
@@ -178,7 +178,7 @@ function! Reloadzone()
 
     let filename = expand('%:t')
     let extension = expand('%:e')
-    
+
     if extension == "rev"
 
         let filename = substitute(filename,"\.rev","","")
